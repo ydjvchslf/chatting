@@ -1,4 +1,4 @@
-package com.mia.chatting.login
+package com.mia.chatting.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,26 +9,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.mia.chatting.R
-import com.mia.chatting.databinding.FragmentLoginBinding
+import com.mia.chatting.databinding.FragmentRegisterBinding
 import com.mia.chatting.util.DebugLog
 
-class LoginFragment : Fragment() {
+class RegisterFragment : Fragment() {
 
-    private val logTag = LoginFragment::class.simpleName
-    private lateinit var binding: FragmentLoginBinding
-    private val loginViewModel: LoginViewModel by activityViewModels()
+    private val logTag = RegisterFragment::class.simpleName
+    private lateinit var binding: FragmentRegisterBinding
+    private val registerViewModel: RegisterViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
         with(binding) {
-            viewModel = loginViewModel
+            viewModel = registerViewModel
             lifecycleOwner = viewLifecycleOwner
         }
-        DebugLog.i(logTag, "onCreateView-()")
         return binding.root
     }
 
@@ -38,11 +37,8 @@ class LoginFragment : Fragment() {
         binding.signInBtn.setOnClickListener {
 
         }
-        binding.registerBtn.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
-        }
-        binding.googleBtn.setOnClickListener {
-
+        binding.loginBtn.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
         }
     }
 }

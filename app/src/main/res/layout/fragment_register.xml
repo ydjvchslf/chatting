@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.mia.chatting.login.LoginViewModel" />
+            type="com.mia.chatting.register.RegisterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,10 +16,10 @@
         <ImageView
             android:id="@+id/text1"
             android:layout_width="258dp"
-            android:layout_height="47dp"
+            android:layout_height="88dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="50dp"
-            android:src="@drawable/login_text_1"
+            android:src="@drawable/register_text_1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +29,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/login_text_2"
+            android:src="@drawable/register_text_2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text1" />
 
@@ -71,23 +71,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input_pw" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/google_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/ic_google_logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/signIn_btn" />
-
         <ImageView
-            android:id="@+id/register_btn"
+            android:id="@+id/login_btn"
             android:layout_width="272dp"
             android:layout_height="34dp"
-            android:src="@drawable/ic_register"
+            android:src="@drawable/ic_login"
             android:layout_marginTop="30dp"
-            app:layout_constraintTop_toBottomOf="@id/google_btn"
+            app:layout_constraintTop_toBottomOf="@id/signIn_btn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
