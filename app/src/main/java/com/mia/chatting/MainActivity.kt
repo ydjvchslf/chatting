@@ -6,6 +6,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.mia.chatting.databinding.ActivityMainBinding
 import com.mia.chatting.util.DebugLog
 
@@ -23,7 +26,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // 다크모드 비활성화
-        navController = Navigation.findNavController(this, R.id.nav_host)
+
+        val bottomNavView = binding.bottomNav
+        val navController = (supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment).findNavController()
+        bottomNavView.setupWithNavController(navController)
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.loginFragment, R.id.registerFragment -> hideBottomNavi(true)
