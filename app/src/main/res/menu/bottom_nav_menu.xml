@@ -4,19 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/listFragment"
+        android:id="@+id/contactFragment"
         android:title="Contact"
         android:icon="@drawable/ic_contact"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/bleFragment"
+        android:id="@+id/messageFragment"
         android:title="Message"
         android:icon="@drawable/ic_message"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/moreFragment"
         android:title="More"
         android:icon="@drawable/ic_more"
         app:showAsAction="always" />

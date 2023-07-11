@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.mia.chatting.message.MessageViewModel" />
+            type="com.mia.chatting.contact.ContactViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="message" />
+            android:text="contact" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

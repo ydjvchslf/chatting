@@ -8,9 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.mia.chatting.MainActivity
 import com.mia.chatting.R
 import com.mia.chatting.databinding.FragmentLoginBinding
+import com.mia.chatting.register.RegisterFragmentDirections
 import com.mia.chatting.util.DebugLog
 
 class LoginFragment : Fragment() {
@@ -18,6 +22,7 @@ class LoginFragment : Fragment() {
     private val logTag = LoginFragment::class.simpleName
     private lateinit var binding: FragmentLoginBinding
     private val loginViewModel: LoginViewModel by activityViewModels()
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +35,7 @@ class LoginFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
         DebugLog.i(logTag, "onCreateView-()")
+        auth = Firebase.auth
         return binding.root
     }
 
@@ -37,7 +43,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         DebugLog.i(logTag, "onViewCreated-()")
         binding.signInBtn.setOnClickListener {
-
+            signIn(binding.inputEmail.text.toString(), binding.inputPw.text.toString())
         }
         binding.registerBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
@@ -47,10 +53,25 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun signIn(email: String, password: String) {
+        DebugLog.i(logTag, "signIn-()")
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        DebugLog.d(logTag, "로그인 Success")
+                        Navigation.findNavController(binding.root).navigate(LoginFragmentDirections.actionLoginFragmentToMessageFragment())
+                    } else {
+                        DebugLog.d(logTag, "로그인 Fail")
+                        DebugLog.d(logTag, "e => ${task.exception.toString()}")
+                    }
+                }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         DebugLog.i(logTag, "onDestroyView-()")
-        //(activity as MainActivity).hideBottomNavi(false)
     }
 
     override fun onDestroy() {

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "121774573692-o4q8sn1iggh182fhldvl7082d0ljpuqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mia.chatting",
+            "certificate_hash": "362063c772b07038ffcb9b2c61dc159de46a3837"
+          }
+        },
+        {
           "client_id": "121774573692-3a0hno1ppkpi5mc57mpdd6e5vc4l7lk1.apps.googleusercontent.com",
           "client_type": 3
         }
