@@ -1,5 +1,6 @@
 package com.mia.chatting.register
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import com.mia.chatting.MainActivity
 import com.mia.chatting.R
 import com.mia.chatting.databinding.FragmentRegisterBinding
 import com.mia.chatting.util.DebugLog
@@ -40,5 +42,15 @@ class RegisterFragment : Fragment() {
         binding.loginBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        DebugLog.i(logTag, "onDestroyView-()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        DebugLog.i(logTag, "onDestroy-()")
     }
 }

@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import com.mia.chatting.MainActivity
 import com.mia.chatting.R
 import com.mia.chatting.databinding.FragmentLoginBinding
 import com.mia.chatting.util.DebugLog
@@ -44,5 +45,16 @@ class LoginFragment : Fragment() {
         binding.googleBtn.setOnClickListener {
 
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        DebugLog.i(logTag, "onDestroyView-()")
+        //(activity as MainActivity).hideBottomNavi(false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        DebugLog.i(logTag, "onDestroy-()")
     }
 }
