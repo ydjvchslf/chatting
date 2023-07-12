@@ -34,16 +34,29 @@
             app:layout_constraintTop_toBottomOf="@id/text1" />
 
         <EditText
-            android:id="@+id/input_email"
+            android:id="@+id/input_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:hint="Email"
+            android:hint="Name"
             android:paddingStart="10dp"
             android:background="@drawable/rec_grey_stoke"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text2"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/input_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Email"
+            android:paddingStart="10dp"
+            android:background="@drawable/rec_grey_stoke"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_name"
             tools:ignore="RtlSymmetry" />
 
         <EditText
