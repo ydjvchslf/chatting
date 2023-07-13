@@ -52,6 +52,11 @@
         android:name="com.mia.chatting.contact.ContactFragment"
         android:label="fragment_contact"
         tools:layout="@layout/fragment_contact" >
+        <action
+            android:id="@+id/action_contactFragment_to_addFragment"
+            app:destination="@id/addFragment"
+            app:popUpTo="@id/registerFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -59,6 +64,13 @@
         android:name="com.mia.chatting.more.MoreFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_more" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.mia.chatting.contact.add.AddFragment"
+        android:label="AddFragment"
+        tools:layout="@layout/fragment_add">
     </fragment>
 
 </navigation>

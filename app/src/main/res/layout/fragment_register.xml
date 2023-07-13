@@ -74,10 +74,10 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/signUp_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:background="@drawable/rec_black_filled"
+            android:background="@drawable/circle_blue"
             android:text="sign up"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"

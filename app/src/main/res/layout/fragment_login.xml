@@ -37,12 +37,13 @@
             android:id="@+id/input_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:hint="Email"
-            android:text="111@naver.com"
-            android:paddingStart="10dp"
+            android:layout_marginTop="44dp"
             android:background="@drawable/rec_grey_stoke"
+            android:hint="Email"
+            android:paddingStart="10dp"
+            android:text="111@nate.com"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text2"
             tools:ignore="RtlSymmetry" />
@@ -53,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="Password"
-            android:text="123456"
+            android:text="111111"
             android:paddingStart="10dp"
             android:background="@drawable/rec_grey_stoke"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,10 +64,10 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/signIn_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:background="@drawable/rec_black_filled"
+            android:background="@drawable/circle_blue"
             android:text="sign in"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +82,8 @@
             android:background="@drawable/ic_google_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/signIn_btn" />
+            app:layout_constraintTop_toBottomOf="@id/signIn_btn"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/register_btn"

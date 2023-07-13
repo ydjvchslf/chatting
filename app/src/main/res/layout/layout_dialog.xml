@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/white_round_rec"
     android:gravity="center"
@@ -25,7 +25,7 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/noButton"
+            android:id="@+id/cancel_btn"
             android:background="@drawable/blue_stroke_unfilled_rec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,11 +36,12 @@
             android:textSize="14sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/yesButton"
+            android:id="@+id/yes_btn"
             android:background="@drawable/blue_stroke_filled_rec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="7dp"
             android:text="YES"
             android:textColor="@color/white"
             android:textSize="14sp" />
