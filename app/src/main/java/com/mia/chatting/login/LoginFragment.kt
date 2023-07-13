@@ -42,6 +42,12 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         DebugLog.i(logTag, "onViewCreated-()")
+        // 자동로그인
+        if (auth.currentUser != null) {
+            Navigation.findNavController(binding.root).navigate(LoginFragmentDirections.actionLoginFragmentToMessageFragment())
+            return
+        }
+
         binding.signInBtn.setOnClickListener {
             signIn(binding.inputEmail.text.toString(), binding.inputPw.text.toString())
         }
