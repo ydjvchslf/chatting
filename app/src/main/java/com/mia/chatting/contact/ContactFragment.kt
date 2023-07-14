@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -17,9 +18,11 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.mia.chatting.R
+import com.mia.chatting.adapter.ContactAdapter
 import com.mia.chatting.data.UserData
 import com.mia.chatting.databinding.FragmentContactBinding
 import com.mia.chatting.register.RegisterFragmentDirections
+import com.mia.chatting.util.DataConverter
 import com.mia.chatting.util.DebugLog
 
 class ContactFragment : Fragment() {
@@ -50,27 +53,16 @@ class ContactFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         DebugLog.i(logTag, "onViewCreated-()")
         // 파베 DB 친구 찾기 목록 불러오기
-        getCurrentContact()
+        contactViewModel.getCurrentContact()
+        // 친구 추가 버튼
         binding.plusBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(ContactFragmentDirections.actionContactFragmentToAddFragment())
         }
-    }
-
-    private fun getCurrentContact() {
-        DebugLog.i(logTag, "getCurrentContact-()")
-
-        auth.uid?.let { uid ->
-            databaseRef.child("users").child(uid).get().addOnSuccessListener{
-                DebugLog.d(logTag, "Got value => ${it.key}")
-                DebugLog.d(logTag, "Got value => ${it.value}")
-                val gson = Gson()
-                val obj =it.getValue(Object::class.java)
-                val json = gson.toJson(obj)
-                val currentUserData = gson.fromJson(json, UserData::class.java) //Json 파일을 데이터 객체로 변환
-                DebugLog.d(logTag, "currentUserData => $currentUserData")
-            }.addOnFailureListener{
-                DebugLog.e("$it")
-            }
+        binding.recyclerView.apply {
+            adapter = contactViewModel.contactAdapter
+        }
+        contactViewModel.contactSize.observe(viewLifecycleOwner) {
+            DebugLog.d(logTag, "contactSize => $it")
         }
     }
 
