@@ -10,9 +10,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 import com.mia.chatting.R
+import com.mia.chatting.data.UserData
 import com.mia.chatting.databinding.FragmentContactBinding
 import com.mia.chatting.register.RegisterFragmentDirections
 import com.mia.chatting.util.DebugLog
@@ -44,21 +49,25 @@ class ContactFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         DebugLog.i(logTag, "onViewCreated-()")
-        binding.checkBtn.setOnClickListener {
-            // 파베 DB 친구 목록 불러오기
-            readContact()
-        }
+        // 파베 DB 친구 찾기 목록 불러오기
+        getCurrentContact()
         binding.plusBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(ContactFragmentDirections.actionContactFragmentToAddFragment())
         }
     }
 
-    private fun readContact() {
-        DebugLog.i(logTag, "readContact-()")
+    private fun getCurrentContact() {
+        DebugLog.i(logTag, "getCurrentContact-()")
+
         auth.uid?.let { uid ->
-            databaseRef.child("users").child(uid).get().addOnSuccessListener {
+            databaseRef.child("users").child(uid).get().addOnSuccessListener{
                 DebugLog.d(logTag, "Got value => ${it.key}")
                 DebugLog.d(logTag, "Got value => ${it.value}")
+                val gson = Gson()
+                val obj =it.getValue(Object::class.java)
+                val json = gson.toJson(obj)
+                val currentUserData = gson.fromJson(json, UserData::class.java) //Json 파일을 데이터 객체로 변환
+                DebugLog.d(logTag, "currentUserData => $currentUserData")
             }.addOnFailureListener{
                 DebugLog.e("$it")
             }

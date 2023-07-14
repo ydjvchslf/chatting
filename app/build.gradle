@@ -75,6 +75,7 @@ dependencies {
     // Firebase 이메일/비밀번호
     implementation 'com.google.firebase:firebase-auth-ktx'
 
-
+    // Gson
+    implementation 'com.google.code.gson:gson:2.9.0'
 
 }
