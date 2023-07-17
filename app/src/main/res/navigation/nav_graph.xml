@@ -45,6 +45,10 @@
         android:name="com.mia.chatting.message.MessageFragment"
         android:label="fragment_message"
         tools:layout="@layout/fragment_message" >
+        <argument
+            android:name="roomId"
+            app:argType="string"
+            app:nullable="true"/>
     </fragment>
 
     <fragment
@@ -55,8 +59,14 @@
         <action
             android:id="@+id/action_contactFragment_to_addFragment"
             app:destination="@id/addFragment"
-            app:popUpTo="@id/registerFragment"
+            app:popUpTo="@id/contactFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_contactFragment_to_messageFragment"
+            app:destination="@id/messageFragment"
+            app:popUpTo="@id/contactFragment"
+            app:popUpToInclusive="true" >
+        </action>
     </fragment>
 
     <fragment

@@ -64,6 +64,21 @@ class ContactFragment : Fragment() {
         contactViewModel.contactSize.observe(viewLifecycleOwner) {
             DebugLog.d(logTag, "contactSize => $it")
         }
+        contactViewModel.contactAdapter.clickListener = { userData, i ->
+            DebugLog.d(logTag, "clicked user uid: ${userData.uid} name: ${userData.name}")
+            // 나와 친구와의 채팅방이 있는지 확인
+            contactViewModel.checkHistory(userData.uid) { isExist, roomId ->
+                if (isExist) {
+                    DebugLog.d(logTag, "채팅방 존재")
+                    Navigation.findNavController(binding.root)
+                        .navigate(ContactFragmentDirections.actionContactFragmentToMessageFragment(roomId))
+                } else {
+                    DebugLog.d(logTag, "채팅방 없음, 첫 대화임!")
+                    Navigation.findNavController(binding.root)
+                        .navigate(ContactFragmentDirections.actionContactFragmentToMessageFragment(roomId))
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

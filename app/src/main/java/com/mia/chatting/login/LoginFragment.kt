@@ -44,7 +44,7 @@ class LoginFragment : Fragment() {
         DebugLog.i(logTag, "onViewCreated-()")
         // 자동로그인
         if (auth.currentUser != null) {
-            Navigation.findNavController(binding.root).navigate(LoginFragmentDirections.actionLoginFragmentToMessageFragment())
+            Navigation.findNavController(binding.root).navigate(LoginFragmentDirections.actionLoginFragmentToMessageFragment(null))
             return
         }
 
@@ -66,7 +66,7 @@ class LoginFragment : Fragment() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         DebugLog.d(logTag, "로그인 Success")
-                        Navigation.findNavController(binding.root).navigate(LoginFragmentDirections.actionLoginFragmentToMessageFragment())
+                        Navigation.findNavController(binding.root).navigate(LoginFragmentDirections.actionLoginFragmentToMessageFragment(null))
                     } else {
                         DebugLog.d(logTag, "로그인 Fail")
                         DebugLog.d(logTag, "e => ${task.exception.toString()}")

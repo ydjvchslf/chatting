@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.navArgs
 import com.mia.chatting.R
 import com.mia.chatting.databinding.FragmentMessageBinding
 import com.mia.chatting.util.DebugLog
@@ -17,6 +18,7 @@ class MessageFragment: Fragment() {
     private val logTag = MessageFragment::class.simpleName
     private lateinit var binding: FragmentMessageBinding
     private val messageViewModel: MessageViewModel by activityViewModels()
+    private val args: MessageFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,5 +37,6 @@ class MessageFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         DebugLog.i(logTag, "onViewCreated-()")
+        DebugLog.d(logTag, "전달 받은 args.uid : ${args.roomId}")
     }
 }

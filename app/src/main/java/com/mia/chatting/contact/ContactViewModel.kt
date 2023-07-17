@@ -7,18 +7,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
 import com.mia.chatting.adapter.ContactAdapter
 import com.mia.chatting.data.UserData
 import com.mia.chatting.util.DataConverter
 import com.mia.chatting.util.DebugLog
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+
 
 class ContactViewModel: ViewModel() {
 
@@ -94,6 +93,32 @@ class ContactViewModel: ViewModel() {
                     }
                 })
             }
+        }
+    }
+
+    fun checkHistory(frdUid: String?, isExist: (Boolean, String?) -> Unit) {
+        DebugLog.i(logTag, "checkHistory-()")
+        if ((frdUid?.isNotEmpty() == true) && auth.uid?.isNotEmpty() == true) {
+            val roomIdList = arrayListOf(frdUid, auth.uid!!).sorted()
+            val roomId = "${roomIdList[0]}-${roomIdList[1]}" // uid-uid
+            DebugLog.d(logTag, "roomId: $roomId")
+            // 기존 채팅방 있는지 체크
+            databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.hasChild("roomId")) {
+                        // run some code
+                        val currentUserData = DataConverter.jsonToUserData(dataSnapshot)
+                        DebugLog.d(logTag, "currentUserData => $currentUserData")
+                        isExist.invoke(true, roomId)
+                    } else {
+                        DebugLog.d(logTag, "기존 채팅방을 못 찾음")
+                        isExist.invoke(false, roomId)
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    DebugLog.e("$error")
+                }
+            })
         }
     }
 }
