@@ -105,7 +105,7 @@ class ContactViewModel: ViewModel() {
             // 기존 채팅방 있는지 체크
             databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    if (dataSnapshot.hasChild("roomId")) {
+                    if (dataSnapshot.hasChild(roomId)) {
                         // run some code
                         val currentUserData = DataConverter.jsonToUserData(dataSnapshot)
                         DebugLog.d(logTag, "currentUserData => $currentUserData")

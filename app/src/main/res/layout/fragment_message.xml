@@ -56,7 +56,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider_up"
-            tools:listitem="@layout/layout_send_item" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/layout_my_msg_item" />
 
         <View
             android:id="@+id/divider_bottom"
