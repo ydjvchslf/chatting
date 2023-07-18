@@ -62,27 +62,38 @@
                     app:lottie_rawRes="@raw/blue_loading_bar"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
-                    android:visibility="@{viewModel.contactSize == 0 ? View.VISIBLE : View.GONE}"/>
+                    android:visibility="@{0 > viewModel.contactSize ? View.VISIBLE : View.GONE}"/>
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="Not Found Contacts"
+                    android:textSize="16dp"
+                    android:visibility="@{viewModel.contactSize == null ? View.VISIBLE : View.GONE}" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:visibility="@{viewModel.contactSize == 0 ? View.GONE : View.VISIBLE}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/layout_contact_item" />
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
 
-            </ScrollView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:visibility="@{viewModel.contactSize == 0 ? View.GONE : View.VISIBLE}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/layout_contact_item" />
+
+                </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

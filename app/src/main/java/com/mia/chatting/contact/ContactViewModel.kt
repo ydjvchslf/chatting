@@ -27,7 +27,7 @@ class ContactViewModel: ViewModel() {
 
     var currentUser = UserData()
     var contactAdapter = ContactAdapter()
-    var contactSize = MutableLiveData(0)
+    var contactSize = MutableLiveData(-1)
 
     init {
         DebugLog.i(logTag, "init-()")
@@ -60,13 +60,19 @@ class ContactViewModel: ViewModel() {
     fun settingContactList() {
         DebugLog.i(logTag, "settingContactList-()")
         val emailList = currentUser.contacts
-        val emailCount = emailList?.size ?: 0 // Get the count of emails
+        val emailCount = emailList?.size // Get the count of email
+
         var completedCount = 0 // Counter variable
         val friendList = ArrayList<UserData>()
 
-        DebugLog.d(logTag, "emailList : $emailList")
+        DebugLog.d(logTag, "emailList : $emailList, emailCount: $emailCount")
 
-        emailList?.forEach { email ->
+        if (emailList == null) {
+            contactSize.value = null
+            return
+        }
+
+        emailList.forEach { email ->
             auth.uid?.let { uid ->
                 val userRef = databaseRef.child("users")
                 userRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(object :
