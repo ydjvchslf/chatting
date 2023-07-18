@@ -1,4 +1,4 @@
-package com.mia.chatting.message
+package com.mia.chatting.room.message
 
 import android.os.Build
 import android.os.Bundle
@@ -54,7 +54,9 @@ class MessageFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         DebugLog.i(logTag, "onViewCreated-()")
-        DebugLog.d(logTag, "전달 받은 args.uid : ${args.roomId}")
+        DebugLog.d(logTag, "전달 받은 args.uid : ${args.roomId}, args.friendName: ${args.friendName}")
+
+        messageViewModel.friendName.value = args.friendName
 
         args.roomId?.let {
             val msgAdapter = MsgAdapter(binding.recyclerMessages, it)

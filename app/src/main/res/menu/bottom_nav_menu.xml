@@ -10,7 +10,7 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/messageFragment"
+        android:id="@+id/roomFragment"
         android:title="Message"
         android:icon="@drawable/ic_message"
         app:showAsAction="always" />

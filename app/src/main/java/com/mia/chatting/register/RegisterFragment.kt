@@ -66,7 +66,7 @@ class RegisterFragment: Fragment() {
                         val userData = UserData(name, user?.uid, email)
                         addUser(userData)
                         // 홈 화면 전환
-                        Navigation.findNavController(binding.root).navigate(RegisterFragmentDirections.actionRegisterFragmentToMessageFragment(null))
+                        Navigation.findNavController(binding.root).navigate(RegisterFragmentDirections.actionRegisterFragmentToRoomFragment())
                     } else {
                         DebugLog.d(logTag, "계정 생성 Fail, e => ${task.exception.toString()}")
                     }

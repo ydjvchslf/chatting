@@ -71,11 +71,11 @@ class ContactFragment : Fragment() {
                 if (isExist) {
                     DebugLog.d(logTag, "채팅방 존재")
                     Navigation.findNavController(binding.root)
-                        .navigate(ContactFragmentDirections.actionContactFragmentToMessageFragment(roomId))
+                        .navigate(ContactFragmentDirections.actionContactFragmentToMessageFragment(roomId, userData.name))
                 } else {
                     DebugLog.d(logTag, "채팅방 없음, 첫 대화임!")
                     Navigation.findNavController(binding.root)
-                        .navigate(ContactFragmentDirections.actionContactFragmentToMessageFragment(roomId))
+                        .navigate(ContactFragmentDirections.actionContactFragmentToMessageFragment(roomId, userData.name))
                 }
             }
         }
