@@ -72,15 +72,16 @@ class MessageFragment: Fragment() {
     fun sendMsg() { // 메시지 전송
         DebugLog.i(logTag, "sendMsg-()")
         try {
-            val chat = Chat(null, auth.uid!!, getDateTimeString(), binding.edtMessage.text.toString(), false)    //메시지 정보 초기화
-            databaseRef.child("chats").child("message").child(args.roomId ?: "none") //현재 채팅방에 메시지 추가
-                .push().setValue(chat).addOnSuccessListener {
-                    DebugLog.i(logTag, "메시지 전송 Success!!!")
-                    binding.edtMessage.text.clear()
-                }.addOnCanceledListener {
-                    DebugLog.i(logTag, "메시지 전송에 Fail")
-                }
-
+            if (binding.edtMessage.text.isNotEmpty()) {
+                val chat = Chat(null, auth.uid!!, getDateTimeString(), binding.edtMessage.text.toString(), false)    //메시지 정보 초기화
+                databaseRef.child("chats").child("message").child(args.roomId ?: "none") //현재 채팅방에 메시지 추가
+                    .push().setValue(chat).addOnSuccessListener {
+                        DebugLog.i(logTag, "메시지 전송 Success!!!")
+                        binding.edtMessage.text.clear()
+                    }.addOnCanceledListener {
+                        DebugLog.i(logTag, "메시지 전송에 Fail")
+                    }
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             DebugLog.i(logTag, "메시지 전송 중 오류가 발생하였습니다.")
