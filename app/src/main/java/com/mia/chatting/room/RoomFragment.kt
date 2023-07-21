@@ -35,5 +35,11 @@ class RoomFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         DebugLog.i(logTag, "onViewCreated-()")
 
+        binding.recyclerView.apply {
+            adapter = roomViewModel.roomAdapter
+        }
+
+        // 파베 채팅방 목록 불러오기
+        roomViewModel.getCurrentRoom()
     }
 }

@@ -1,10 +1,7 @@
 package com.mia.chatting.adapter
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -13,7 +10,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.mia.chatting.R
-import com.mia.chatting.data.Chat
+import com.mia.chatting.data.ChatData
 import com.mia.chatting.databinding.LayoutMyMsgItemBinding
 import com.mia.chatting.databinding.LayoutOtherMsgItemBinding
 import com.mia.chatting.util.DataConverter
@@ -25,7 +22,7 @@ class MsgAdapter(
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val logTag = MsgAdapter::class.simpleName
 
-    var chats: ArrayList<Chat> = arrayListOf()     // 메시지 목록
+    var chatData: ArrayList<ChatData> = arrayListOf()     // 메시지 목록
     //var messageKeys: ArrayList<String> = arrayListOf()   // 메시지 키 목록
     private val myUid = FirebaseAuth.getInstance().currentUser?.uid
 
@@ -45,7 +42,7 @@ class MsgAdapter(
                 override fun onDataChange(snapshot: DataSnapshot) {
                     DebugLog.i(logTag, "onDataChange-()")
                     DebugLog.d(logTag, "snapshot: $snapshot")
-                    chats.clear()
+                    chatData.clear()
                     if (snapshot.value != null) {
                         DebugLog.d(logTag, "snapshot.value: ${snapshot.value}")
                         val elements = snapshot.children.toMutableList()
@@ -53,11 +50,11 @@ class MsgAdapter(
                             //your logic
                             val chat = DataConverter.jsonToChatData(element)
                             DebugLog.d(logTag, "chat: $chat")
-                            chats.add(chat)
+                            chatData.add(chat)
                         }
                         notifyDataSetChanged() // 화면 업데이트
                         recyclerView.apply {
-                            scrollToPosition(chats.size - 1) // 스크롤 최하단으로 내리기
+                            scrollToPosition(chatData.size - 1) // 스크롤 최하단으로 내리기
                             layoutChangeListener
                         }
 
@@ -74,7 +71,7 @@ class MsgAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {               // 메시지의 id에 따라 내 메시지/상대 메시지 구분
-        return if (chats[position].senderUid.equals(myUid)) 1 else 0 // 1: mine 0: other
+        return if (chatData[position].senderUid.equals(myUid)) 1 else 0 // 1: mine 0: other
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -93,7 +90,7 @@ class MsgAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (chats[position].senderUid.equals(myUid)) {       // 레이아웃 항목 초기화
+        if (chatData[position].senderUid.equals(myUid)) {       // 레이아웃 항목 초기화
             (holder as MyMessageViewHolder).bind(position)
         } else {
             (holder as OtherMessageViewHolder).bind(position)
@@ -101,15 +98,15 @@ class MsgAdapter(
     }
 
     override fun getItemCount(): Int {
-        return chats.size
+        return chatData.size
     }
 
     val layoutChangeListener =
         recyclerView.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (bottom < oldBottom) {
                 recyclerView.postDelayed({
-                    if (chats.size > 0) {
-                        recyclerView.scrollToPosition(chats.size - 1)
+                    if (chatData.size > 0) {
+                        recyclerView.scrollToPosition(chatData.size - 1)
                     }
                 }, 100)
             }
@@ -122,7 +119,7 @@ class MsgAdapter(
         var txtDate = itemView.txtDate
 
         fun bind(position: Int) {            //메시지 UI 레이아웃 초기화
-            val chats = chats[position]
+            val chats = chatData[position]
             val sendDate = chats.sendDate
             txtMessage.text = chats.content
             txtDate.text = getDateText(sendDate)
@@ -157,7 +154,7 @@ class MsgAdapter(
         var txtDate = itemView.txtDate
 
         fun bind(position: Int) {           //메시지 UI 항목 초기화
-            val message = chats[position]
+            val message = chatData[position]
             val sendDate = message.sendDate
 
             txtMessage.text = message.content

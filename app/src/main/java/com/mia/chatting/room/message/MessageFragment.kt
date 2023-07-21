@@ -2,7 +2,6 @@ package com.mia.chatting.room.message
 
 import android.os.Build
 import android.os.Bundle
-import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +10,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.mia.chatting.R
 import com.mia.chatting.adapter.MsgAdapter
-import com.mia.chatting.data.Chat
+import com.mia.chatting.data.ChatData
 import com.mia.chatting.databinding.FragmentMessageBinding
 import com.mia.chatting.util.DebugLog
 import java.time.LocalDateTime
@@ -75,9 +72,9 @@ class MessageFragment: Fragment() {
         DebugLog.i(logTag, "sendMsg-()")
         try {
             if (binding.edtMessage.text.isNotEmpty()) {
-                val chat = Chat(auth.uid!!, getDateTimeString(), binding.edtMessage.text.toString(), false)    //메시지 정보 초기화
+                val chatData = ChatData(auth.uid!!, getDateTimeString(), binding.edtMessage.text.toString(), false)    //메시지 정보 초기화
                 databaseRef.child("chats").child("message").child(args.roomId ?: "none") //현재 채팅방에 메시지 추가
-                    .push().setValue(chat).addOnSuccessListener {
+                    .push().setValue(chatData).addOnSuccessListener {
                         DebugLog.i(logTag, "메시지 전송 Success!!!")
                         binding.edtMessage.text.clear()
                     }.addOnCanceledListener {
