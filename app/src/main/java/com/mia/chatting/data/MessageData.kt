@@ -13,3 +13,10 @@ data class FirebaseData(
     val checked: Boolean?,
     val content: String?
 )
+
+data class AfterFirebaseData(
+    val counterName: String,
+    val lastDate: String,
+    val lastContent: String,
+    val unreadNum: Int
+)
