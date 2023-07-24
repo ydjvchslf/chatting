@@ -45,6 +45,9 @@
         android:name="com.mia.chatting.room.RoomFragment"
         android:label="fragment_room"
         tools:layout="@layout/fragment_room" >
+        <action
+            android:id="@+id/action_roomFragment_to_messageFragment"
+            app:destination="@id/messageFragment" />
     </fragment>
 
     <fragment

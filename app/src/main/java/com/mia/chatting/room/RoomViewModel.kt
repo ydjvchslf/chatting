@@ -165,4 +165,30 @@ class RoomViewModel: ViewModel() {
             roomAdapter.submitList(afterFirebaseDataList)
         }
     }
+
+    fun extractYourName(frdUid: String, yourName: (String) -> Unit) {
+        DebugLog.i(logTag, "extractYourName-()")
+        auth.uid?.let { uid->
+            databaseRef.child("users").child(frdUid).get().addOnSuccessListener{
+                val gson = Gson()
+                val obj = it.getValue(Object::class.java)
+                val json = gson.toJson(obj)
+                val currentUserData = gson.fromJson(json, UserData::class.java) //Json 파일을 데이터 객체로 변환
+                DebugLog.d(logTag, "currentUserData => $currentUserData")
+                yourName.invoke(currentUserData.name.toString())
+            }.addOnFailureListener{
+                DebugLog.e("$it")
+            }
+        }
+    }
+
+    fun extractFromRoomId(roomId: String): String {
+        DebugLog.i(logTag, "extractFromRoomId-()")
+        val spiltArray = roomId.split("-")
+        return if (spiltArray[0] == auth.uid) {
+            spiltArray[1]
+        } else {
+            spiltArray[0]
+        }
+    }
 }
