@@ -9,6 +9,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.mia.chatting.R
 import com.mia.chatting.data.ChatData
 import com.mia.chatting.databinding.LayoutMyMsgItemBinding
@@ -25,13 +27,33 @@ class MsgAdapter(
     var chatData: ArrayList<ChatData> = arrayListOf()     // 메시지 목록
     //var messageKeys: ArrayList<String> = arrayListOf()   // 메시지 키 목록
     private val myUid = FirebaseAuth.getInstance().currentUser?.uid
+    private val databaseRef = Firebase.database.reference
 
     init {
-        setupMessages()
+        updateAllData {
+            if (it) { setupMessages() }
+        }
     }
 
     fun setupMessages() {
         getMessages()
+    }
+
+    fun updateAllData(result: (Boolean) -> Unit) {
+        DebugLog.i(logTag, "updateAllData-()")
+        databaseRef.child("chats").child("message").child(roomId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // Iterate through the snapshot's children and update the "open" property to false
+                snapshot.children.forEach { child ->
+                    child.ref.child("checked").setValue(true)
+                }
+                result.invoke(true)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle the error if needed
+            }
+        })
     }
 
     fun getMessages() {

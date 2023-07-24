@@ -1,6 +1,7 @@
 package com.mia.chatting.adapter
 
 import android.annotation.SuppressLint
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -40,7 +41,13 @@ class RoomViewHolder(binding: LayoutRoomItemBinding): RecyclerView.ViewHolder(bi
         nameTextView.text = afterFirebaseData.outerKey
         contentTextView.text = afterFirebaseData.content
         timeTextView.text = afterFirebaseData.sendDate
-        countTextView.text = afterFirebaseData.unreadNum.toString()
+
+        val unreadCount = afterFirebaseData.unreadNum.toString()
+        if (unreadCount > 0.toString()) {
+            countTextView.text = afterFirebaseData.unreadNum.toString()
+        } else {
+            countTextView.visibility = View.GONE
+        }
     }
 
     fun changeDataFormat(origin: AfterFirebaseData) {
