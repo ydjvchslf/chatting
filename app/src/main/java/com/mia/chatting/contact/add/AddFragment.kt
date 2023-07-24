@@ -19,6 +19,7 @@ import com.google.gson.Gson
 import com.mia.chatting.R
 import com.mia.chatting.data.UserData
 import com.mia.chatting.databinding.FragmentAddBinding
+import com.mia.chatting.register.RegisterFragmentDirections
 import com.mia.chatting.util.ConfirmDialogInterface
 import com.mia.chatting.util.CustomDialog
 import com.mia.chatting.util.DebugLog
@@ -61,6 +62,10 @@ class AddFragment : Fragment(), ConfirmDialogInterface {
         }
         // 기존 연락처 가져오기
         cntList = currentContact()
+
+        binding.backBtn.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(AddFragmentDirections.actionAddFragmentToContactFragment())
+        }
     }
 
     override fun yesBtnClicked() {
