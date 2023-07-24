@@ -33,18 +33,45 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="match_parent" >
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/logout_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="logout" />
+                android:text="logout"
+                android:textColor="@color/white"
+                android:background="@drawable/circle_blue"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/version"/>
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="v1.0.0"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toTopOf="@id/textView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="App supported by @MIA"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="20dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
