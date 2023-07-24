@@ -19,6 +19,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.mia.chatting.R
 import com.mia.chatting.adapter.ContactAdapter
+import com.mia.chatting.adapter.MyItemDeco
 import com.mia.chatting.data.UserData
 import com.mia.chatting.databinding.FragmentContactBinding
 import com.mia.chatting.register.RegisterFragmentDirections
@@ -60,6 +61,7 @@ class ContactFragment : Fragment() {
         }
         binding.recyclerView.apply {
             adapter = contactViewModel.contactAdapter
+            addItemDecoration(MyItemDeco(2))
         }
         contactViewModel.contactSize.observe(viewLifecycleOwner) {
             DebugLog.d(logTag, "contactSize => $it")
