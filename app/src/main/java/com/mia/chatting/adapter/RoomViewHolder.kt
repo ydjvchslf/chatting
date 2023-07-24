@@ -31,19 +31,19 @@ class RoomViewHolder(binding: LayoutRoomItemBinding): RecyclerView.ViewHolder(bi
 
     // 데이터와 뷰를 묶는다.
     @SuppressLint("SetTextI18n")
-    fun bind(firebaseData: FirebaseData) {
+    fun bind(afterFirebaseData: AfterFirebaseData) {
         DebugLog.i(logTag, "bind-()")
-        DebugLog.d(logTag, "firebaseData: $firebaseData")
+        DebugLog.d(logTag, "afterFirebaseData: $afterFirebaseData")
 
-        changeDataFormat(firebaseData)
+        changeDataFormat(afterFirebaseData)
 
-        nameTextView.text = firebaseData.outerKey
-        contentTextView.text = firebaseData.content
-        timeTextView.text = firebaseData.sendDate
-        //countTextView.text = firebaseData.content
+        nameTextView.text = afterFirebaseData.outerKey
+        contentTextView.text = afterFirebaseData.content
+        timeTextView.text = afterFirebaseData.sendDate
+        countTextView.text = afterFirebaseData.unreadNum.toString()
     }
 
-    fun changeDataFormat(origin: FirebaseData) {
+    fun changeDataFormat(origin: AfterFirebaseData) {
         // uid 파싱해서 변환
         val beforeUid = origin.outerKey
         val beforeStr = beforeUid.split("-")

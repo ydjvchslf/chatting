@@ -12,10 +12,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.mia.chatting.adapter.RoomAdapter
-import com.mia.chatting.data.FirebaseData
-import com.mia.chatting.data.MessageData
-import com.mia.chatting.data.RoomData
-import com.mia.chatting.data.UserData
+import com.mia.chatting.data.*
 import com.mia.chatting.util.DataConverter
 import com.mia.chatting.util.DebugLog
 import kotlinx.coroutines.Dispatchers
@@ -132,6 +129,14 @@ class RoomViewModel: ViewModel() {
 
             val groupedDataMap: Map<String, List<FirebaseData>> = dataList.groupBy { it.outerKey }
 
+            DebugLog.d(logTag, "groupedDataMap====> $groupedDataMap")
+
+            val checkedCountMap: Map<String, Int> = groupedDataMap.mapValues { (_, dataListForOuterKey) ->
+                dataListForOuterKey.count {
+                    it.senderUid?.equals(auth.uid) == false && it.checked == false
+                }
+            }
+
             val adapterList = arrayListOf<FirebaseData>()
             myChatList.forEach { myChatId ->
                 val whatList = groupedDataMap[myChatId]?.sortedByDescending { it.sendDate }?.first()
@@ -140,7 +145,24 @@ class RoomViewModel: ViewModel() {
                     adapterList.add(whatList)
                 }
             }
-            roomAdapter.submitList(adapterList)
+
+            // Now, let's convert the adapterList to a new ArrayList of AfterFirebaseData
+            val afterFirebaseDataList = arrayListOf<AfterFirebaseData>()
+            adapterList.forEach { firebaseData ->
+                val unreadNum = checkedCountMap[firebaseData.outerKey] ?: 0
+                val afterFirebaseData = AfterFirebaseData(
+                    firebaseData.outerKey,
+                    firebaseData.innerKey,
+                    firebaseData.senderUid,
+                    firebaseData.sendDate,
+                    firebaseData.content,
+                    unreadNum
+                )
+                afterFirebaseDataList.add(afterFirebaseData)
+            }
+
+            DebugLog.d(logTag, "afterFirebaseDataList====> $afterFirebaseDataList")
+            roomAdapter.submitList(afterFirebaseDataList)
         }
     }
 }

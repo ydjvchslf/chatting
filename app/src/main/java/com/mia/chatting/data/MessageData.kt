@@ -15,8 +15,10 @@ data class FirebaseData(
 )
 
 data class AfterFirebaseData(
-    val counterName: String,
-    val lastDate: String,
-    val lastContent: String,
-    val unreadNum: Int
+    val outerKey: String,
+    val innerKey: String,
+    val senderUid: String?,
+    val sendDate: String?,
+    val content: String?,
+    val unreadNum: Int?
 )

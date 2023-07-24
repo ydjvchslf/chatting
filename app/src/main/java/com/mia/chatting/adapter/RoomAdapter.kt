@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mia.chatting.R
+import com.mia.chatting.data.AfterFirebaseData
 import com.mia.chatting.data.FirebaseData
 import com.mia.chatting.data.RoomData
 import com.mia.chatting.data.UserData
@@ -14,9 +15,9 @@ import com.mia.chatting.util.DebugLog
 class RoomAdapter: RecyclerView.Adapter<RoomViewHolder>() {
 
     private val logTag = RoomAdapter::class.simpleName
-    var roomList = ArrayList<FirebaseData>()
+    var roomList = ArrayList<AfterFirebaseData>()
 
-    var clickListener : ((FirebaseData, Int) -> Unit)? = null
+    var clickListener : ((AfterFirebaseData, Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder {
         // 연결할 레이아웃 설정
@@ -44,7 +45,7 @@ class RoomAdapter: RecyclerView.Adapter<RoomViewHolder>() {
 
     // 외부데이터 넘기기 -> adapter에서 갖고 있는 deviceList 와 외부에서 들어온 deviceList 를 연결해주는 함수
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(roomList: ArrayList<FirebaseData>){
+    fun submitList(roomList: ArrayList<AfterFirebaseData>){
         this.roomList = roomList // 외부데이터를 adapter 데이터로 할당
         DebugLog.d(logTag, "this.contactList: ${this.roomList}")
         notifyDataSetChanged()
