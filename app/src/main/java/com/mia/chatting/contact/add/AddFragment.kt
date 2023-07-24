@@ -4,16 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.mia.chatting.R
-import com.mia.chatting.contact.ContactFragmentDirections
 import com.mia.chatting.data.UserData
 import com.mia.chatting.databinding.FragmentAddBinding
 import com.mia.chatting.util.ConfirmDialogInterface
@@ -63,10 +66,40 @@ class AddFragment : Fragment(), ConfirmDialogInterface {
     override fun yesBtnClicked() {
         DebugLog.i(logTag, "yesBtnClicked-()")
 
-        val friendEmail = binding.friendEmail.text.toString()
+        val friendEmail = binding.friendEmail.text.toString().trim()
         if (friendEmail.isNotEmpty()) {
-            // 연락처 추가 (파베 db 업데이트)
-            updateContact(cntList, friendEmail)
+            // 입력한 Email 유효한지 체크
+            checkEmailDB(friendEmail) { isExist ->
+                if (isExist) {
+                    // 연락처 추가 (파베 db 업데이트)
+                    updateContact(cntList, friendEmail)
+                } else {
+                    // 유효하지 않은 이메일 입력
+                    Toast.makeText(context,"이메일을 다시 확인해주세요!", Toast.LENGTH_LONG).show()
+                    binding.friendEmail.text.clear()
+                }
+            }
+
+        }
+    }
+
+    private fun checkEmailDB(inputEmail: String, result: (Boolean) -> Unit) {
+        DebugLog.i(logTag, "checkEmailDB-()")
+        auth.uid?.let {
+            usersRef.orderByChild("email").equalTo(inputEmail).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.value != null) {
+                        DebugLog.d(logTag, "data.value => ${snapshot.value}")
+                        result.invoke(true)
+                    } else {
+                        DebugLog.d(logTag, "data.value == null, ${snapshot.value}")
+                        result.invoke(false)
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle cancelled event
+                }
+            })
         }
     }
 
