@@ -76,7 +76,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="Not Found Contacts"
+                    android:text="발견된 연락처가 없습니다"
                     android:textSize="16dp"
                     android:visibility="@{viewModel.contactSize == null ? View.VISIBLE : View.GONE}" />
 

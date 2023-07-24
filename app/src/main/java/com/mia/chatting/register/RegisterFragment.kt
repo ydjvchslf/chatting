@@ -45,7 +45,7 @@ class RegisterFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         DebugLog.i(logTag, "onViewCreated-()")
         binding.signUpBtn.setOnClickListener {
-            createAccount(binding.inputName.text.toString(), binding.inputEmail.text.toString(), binding.inputPw.text.toString())
+            createAccount(binding.inputName.text.toString(), binding.inputEmail.text.toString().trim(), binding.inputPw.text.toString())
         }
         binding.loginBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
