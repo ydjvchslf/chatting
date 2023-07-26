@@ -63,7 +63,8 @@ class LoginFragment : Fragment() {
     private fun signIn(email: String, password: String) {
         DebugLog.i(logTag, "signIn-()")
         if (email.isNotEmpty() && password.isNotEmpty()) {
-            auth.signInWithEmailAndPassword(email, password)
+            DebugLog.d(logTag, "email: ${email.trim()}, pw: $password")
+            auth.signInWithEmailAndPassword(email.trim(), password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         DebugLog.d(logTag, "로그인 Success")
